@@ -7,17 +7,28 @@
 //
 
 import UIKit
+import CoreData
 
 class BookCell: UITableViewCell {
-    @IBOutlet weak var bookImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var topicLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var isReadButton: UIImageView!
+    @IBOutlet weak var isReadImage: UIImageView!
+    
+    private var book: Book!
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
-    @IBOutlet weak var isReadButtonTapped: UIImageView!
+    func configureCell(book: Book) {
+        self.book = book
+        
+        nameLabel.text = book.booksName
+        topicLabel.text = book.booksTopic
+        authorLabel.text = book.booksAuthor
+        
+        let formator = DateFormatter()
+        formator.dateFormat = "EEEE, MMM d, yyyy HH:mm"
+    }
 }

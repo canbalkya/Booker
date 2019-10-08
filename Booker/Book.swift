@@ -9,18 +9,18 @@
 import UIKit
 import CoreData
 
-class Books {
+class Book {
     var booksName: String
     var booksTopic: String
     var booksAuthor: String
     var isRead: Bool
-    var image: UIImage
+    var timestamp: Date
     
-    init(booksName: String, booksTopic: String, booksAuthor: String, isRead: Bool, image: UIImage) {
+    init(booksName: String, booksTopic: String, booksAuthor: String, isRead: Bool, timestamp: Date) {
         self.booksName = booksName
         self.booksTopic = booksTopic
         self.booksAuthor = booksAuthor
         self.isRead = isRead
-        self.image = image
+        self.timestamp = timestamp
     }
 }

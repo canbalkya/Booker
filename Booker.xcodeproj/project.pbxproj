@@ -14,7 +14,7 @@
 		3AC10C8E234CEE290016F175 /* Booker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3AC10C8C234CEE290016F175 /* Booker.xcdatamodeld */; };
 		3AC10C90234CEE2A0016F175 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AC10C8F234CEE2A0016F175 /* Assets.xcassets */; };
 		3AC10C93234CEE2A0016F175 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AC10C91234CEE2A0016F175 /* LaunchScreen.storyboard */; };
-		3AC10C9B234CF40A0016F175 /* Books.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC10C9A234CF40A0016F175 /* Books.swift */; };
+		3AC10C9B234CF40A0016F175 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC10C9A234CF40A0016F175 /* Book.swift */; };
 		3AC10C9D234D03020016F175 /* BookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC10C9C234D03020016F175 /* BookCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,7 +28,7 @@
 		3AC10C8F234CEE2A0016F175 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3AC10C92234CEE2A0016F175 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3AC10C94234CEE2A0016F175 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3AC10C9A234CF40A0016F175 /* Books.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Books.swift; sourceTree = "<group>"; };
+		3AC10C9A234CF40A0016F175 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		3AC10C9C234D03020016F175 /* BookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,7 +66,7 @@
 				3AC10C85234CEE290016F175 /* SceneDelegate.swift */,
 				3AC10C87234CEE290016F175 /* ViewController.swift */,
 				3AC10C9C234D03020016F175 /* BookCell.swift */,
-				3AC10C9A234CF40A0016F175 /* Books.swift */,
+				3AC10C9A234CF40A0016F175 /* Book.swift */,
 				3AC10C89234CEE290016F175 /* Main.storyboard */,
 				3AC10C8F234CEE2A0016F175 /* Assets.xcassets */,
 				3AC10C91234CEE2A0016F175 /* LaunchScreen.storyboard */,
@@ -151,7 +151,7 @@
 				3AC10C88234CEE290016F175 /* ViewController.swift in Sources */,
 				3AC10C8E234CEE290016F175 /* Booker.xcdatamodeld in Sources */,
 				3AC10C84234CEE290016F175 /* AppDelegate.swift in Sources */,
-				3AC10C9B234CF40A0016F175 /* Books.swift in Sources */,
+				3AC10C9B234CF40A0016F175 /* Book.swift in Sources */,
 				3AC10C86234CEE290016F175 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
