@@ -24,7 +24,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         fetchBooks()
     }
     
-    func addBook(name: String, topic: String, author: String, isRead: Bool) {
+    func addBook(name: String, topic: String, author: String, isRead: Bool, timestamp: Date) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -35,10 +35,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         item.setValue(topic, forKey: "topic")
         item.setValue(author, forKey: "author")
         item.setValue(isRead, forKey: "isRead")
+        item.setValue(timestamp, forKey: "timestamp")
         
         do {
             try managedContext.save()
-        } catch let error{
+        } catch let error {
             print("Item can't be created: \(error.localizedDescription)")
         }
     }
@@ -63,11 +64,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let fetchResults = try managedContext.fetch(fetchRequest)
             
             for item in fetchResults as! [NSManagedObject] {
-                books.append(Book(booksName: item.value(forKey: "name") as! String, booksTopic: item.value(forKey: "topic") as! String, booksAuthor: item.value(forKey: "author") as! String, isRead: false, timestamp: Date()))
+                books.append(Book(booksName: item.value(forKey: "name") as! String, booksTopic: item.value(forKey: "topic") as! String, booksAuthor: item.value(forKey: "author") as! String, isRead: item.value(forKey: "isRead") as! Bool, timestamp: item.value(forKey: "timestamp") as! Date))
             }
             
             tableView.reloadData()
-        } catch let error{
+        } catch let error {
             print(error.localizedDescription)
         }
     }
@@ -78,16 +79,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? BookCell
-//        cell?.nameLabel.text = books[indexPath.row].booksName
-//        cell?.topicLabel.text = books[indexPath.row].booksTopic
-//        cell?.authorLabel.text = books[indexPath.row].booksAuthor
-//        cell?.isReadImage!.image = #imageLiteral(resourceName: "Off")
-        
-//        if books[indexPath.row].isRead == false {
-//
-//        } else {
-//            cell?.isReadImage!.image = #imageLiteral(resourceName: "On")
-//        }
         cell!.configureCell(book: books[indexPath.row])
         
         return cell!
@@ -106,7 +97,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         let saveAction = UIAlertAction(title: "Add", style: .default) { (_) in
-            self.addBook(name: popup.textFields![0].text!, topic: popup.textFields![1].text!, author: popup.textFields![2].text!, isRead: false)
+            self.addBook(name: popup.textFields![0].text!, topic: popup.textFields![1].text!, author: popup.textFields![2].text!, isRead: false, timestamp: Date())
             self.fetchBooks()
         }
         
