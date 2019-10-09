@@ -13,7 +13,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tableView: UITableView!
     
     var books = [Book]()
-    
     let search = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
