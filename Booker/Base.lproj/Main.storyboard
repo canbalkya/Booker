@@ -89,16 +89,15 @@
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="W4G-9P-VJZ"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="1bw-19-ymc"/>
-                                    <outlet property="prefetchDataSource" destination="BYZ-38-t0r" id="g8u-pg-5Qz"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottomMargin" secondItem="kHe-yy-tSf" secondAttribute="bottom" constant="-34" id="MlN-ZI-Xgd"/>
-                            <constraint firstItem="kHe-yy-tSf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Us5-n4-h0A"/>
-                            <constraint firstItem="kHe-yy-tSf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="rDS-FJ-jQN"/>
-                            <constraint firstItem="kHe-yy-tSf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="udW-wk-EhH"/>
+                            <constraint firstAttribute="bottom" secondItem="kHe-yy-tSf" secondAttribute="bottom" id="NNc-uZ-QzV"/>
+                            <constraint firstItem="kHe-yy-tSf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="kSM-IF-LWX"/>
+                            <constraint firstItem="kHe-yy-tSf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ofH-95-9v5"/>
+                            <constraint firstItem="kHe-yy-tSf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="rhb-1Y-mjV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

@@ -9,15 +9,23 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     var books = [Book]()
+    
+    let search = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        search.searchBar.delegate = self
+        search.obscuresBackgroundDuringPresentation = false
+        search.searchBar.placeholder = "Find a book"
+        search.searchResultsUpdater = self as? UISearchResultsUpdating
+        navigationItem.searchController = search
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,12 +52,64 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    func updateBook() {
+    func updateBook(book: Book) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Books")
+        fetchRequest.predicate = NSPredicate(format: "book = %@", book as! CVarArg)
+        
+        let popup = UIAlertController(title: "Update", message: "Update book's informations.", preferredStyle: .alert)
+        popup.addTextField { (textField) in
+            textField.placeholder = "Name"
+        }
+        
+        popup.addTextField { (textField) in
+            textField.placeholder = "Topic"
+        }
+        
+        popup.addTextField { (textField) in
+            textField.placeholder = "Author"
+        }
+        
+        let saveAction = UIAlertAction(title: "Change", style: .default) { (_) in
+            do {
+                let result = try managedContext.fetch(fetchRequest)
+                result[0].setValue(popup.textFields![0].text, forKey: "name")
+                result[1].setValue(popup.textFields![1].text, forKey: "topic")
+                result[2].setValue(popup.textFields![2].text, forKey: "author")
+            } catch let error {
+                print(error.localizedDescription)
+            }
+            
+            self.fetchBooks()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        popup.addAction(saveAction)
+        popup.addAction(cancelAction)
+        self.present(popup, animated: true, completion: nil)
     }
     
-    func removeBook() {
-        
+    func removeBook(book: Book) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+
+        let managedContext = appDelegate.persistentContainer.viewContext
+
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Books")
+        fetchRequest.predicate = NSPredicate(format: "book = %@", book as! CVarArg)
+
+        if let result = try? managedContext.fetch(fetchRequest) {
+            for book in result {
+                managedContext.delete(book)
+            }
+
+            do {
+                try managedContext.save()
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func fetchBooks() {
@@ -64,7 +124,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let fetchResults = try managedContext.fetch(fetchRequest)
             
             for item in fetchResults as! [NSManagedObject] {
-                books.append(Book(booksName: item.value(forKey: "name") as! String, booksTopic: item.value(forKey: "topic") as! String, booksAuthor: item.value(forKey: "author") as! String, isRead: item.value(forKey: "isRead") as! Bool, timestamp: item.value(forKey: "timestamp") as! Date))
+                books.append(Book(booksName: item.value(forKey: "name") as! String, booksTopic: item.value(forKey: "topic") as! String, booksAuthor: item.value(forKey: "author") as! String, isRead: item.value(forKey: "isRead") as? Bool ?? true, timestamp: item.value(forKey: "timestamp") as? Date ?? Date()))
             }
             
             tableView.reloadData()
@@ -82,6 +142,31 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell!.configureCell(book: books[indexPath.row])
         
         return cell!
+    }
+    
+    func tableView(_tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let update = UIContextualAction(style: .normal, title: "Update") { (action, UIView, (Bool) -> Void) in
+            self.updateBook(book: self.books[indexPath.row])
+            self.fetchBooks()
+            tableView.reloadData()
+        }
+        
+        return UISwipeActionsConfiguration(actions: [update])
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, UIView, (Bool) -> Void) in
+            self.removeBook(book: self.books[indexPath.row])
+            self.books.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.reloadData()
+        }
+        
+        return UISwipeActionsConfiguration(actions: [delete])
     }
     
     @IBAction func addButton(_ sender: UIBarButtonItem) {
