@@ -28,7 +28,10 @@ class BookCell: UITableViewCell {
         topicLabel.text = book.booksTopic
         authorLabel.text = book.booksAuthor
         
-        let formator = DateFormatter()
-        formator.dateFormat = "EEEE, MMM d, yyyy HH:mm"
+        if book.isRead == false {
+            isReadImage.image = #imageLiteral(resourceName: "Off")
+        } else {
+            isReadImage.image = #imageLiteral(resourceName: "On")
+        }
     }
 }
