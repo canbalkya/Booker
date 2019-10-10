@@ -10,10 +10,12 @@ import UIKit
 import CoreData
 
 class BookCell: UITableViewCell {
+    @IBOutlet weak var booksImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var topicLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var isReadImage: UIImageView!
+    @IBOutlet weak var timestampLabel: UILabel!
     
     private var book: Book!
     
@@ -30,5 +32,8 @@ class BookCell: UITableViewCell {
         
         let formator = DateFormatter()
         formator.dateFormat = "EEEE, MMM d, yyyy HH:mm"
+        
+        let timestamp = formator.string(from: book.timestamp)
+        timestampLabel.text = timestamp
     }
 }
