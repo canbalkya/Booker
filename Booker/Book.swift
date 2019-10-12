@@ -15,12 +15,14 @@ class Book {
     var booksAuthor: String
     var isRead: Bool
     var timestamp: Date
+    var isReadImage: UIImage
     
-    init(booksName: String, booksTopic: String, booksAuthor: String, isRead: Bool, timestamp: Date) {
+    init(booksName: String, booksTopic: String, booksAuthor: String, isRead: Bool, timestamp: Date, isReadImage: UIImage) {
         self.booksName = booksName
         self.booksTopic = booksTopic
         self.booksAuthor = booksAuthor
         self.isRead = isRead
         self.timestamp = timestamp
+        self.isReadImage = isReadImage
     }
 }

@@ -31,7 +31,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         fetchBooks()
     }
     
-    func addBook(name: String, topic: String, author: String, isRead: Bool, timestamp: Date) {
+    func addBook(name: String, topic: String, author: String, isRead: Bool, timestamp: Date, isReadImage: UIImage) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -43,6 +43,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         item.setValue(author, forKey: "author")
         item.setValue(isRead, forKey: "isRead")
         item.setValue(timestamp, forKey: "timestamp")
+        item.setValue(isReadImage, forKey: "isReadImage")
         
         do {
             try managedContext.save()
@@ -137,7 +138,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let fetchResults = try managedContext.fetch(fetchRequest)
             
             for item in fetchResults as! [NSManagedObject] {
-                books.append(Book(booksName: item.value(forKey: "name") as! String, booksTopic: item.value(forKey: "topic") as! String, booksAuthor: item.value(forKey: "author") as! String, isRead: item.value(forKey: "isRead") as? Bool ?? false, timestamp: item.value(forKey: "timestamp") as? Date ?? Date()))
+                books.append(Book(booksName: item.value(forKey: "name") as! String, booksTopic: item.value(forKey: "topic") as! String, booksAuthor: item.value(forKey: "author") as! String, isRead: item.value(forKey: "isRead") as? Bool ?? false, timestamp: item.value(forKey: "timestamp") as? Date ?? Date(), isReadImage: item.value(forKey: "isReadImage") as? UIImage ?? UIImage(named: "Off")!))
             }
             
             tableView.reloadData()
@@ -153,7 +154,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? BookCell
         cell!.configureCell(book: books[indexPath.row])
-        
         return cell!
     }
     
@@ -225,7 +225,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         let saveAction = UIAlertAction(title: "Add", style: .default) { (_) in
-            self.addBook(name: popup.textFields![0].text!, topic: popup.textFields![1].text!, author: popup.textFields![2].text!, isRead: false, timestamp: Date())
+            self.addBook(name: popup.textFields![0].text!, topic: popup.textFields![1].text!, author: popup.textFields![2].text!, isRead: false, timestamp: Date(), isReadImage: UIImage(named: "Off")!)
             self.fetchBooks()
         }
         

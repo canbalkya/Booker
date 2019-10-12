@@ -27,11 +27,20 @@ class BookCell: UITableViewCell {
         nameLabel.text = book.booksName
         topicLabel.text = book.booksTopic
         authorLabel.text = book.booksAuthor
+        isReadImage.image = book.isReadImage
         
-        if book.isRead == false {
-            isReadImage.image = #imageLiteral(resourceName: "Off")
-        } else {
+        isReadImage.isUserInteractionEnabled = true
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(selectImage))
+        isReadImage.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    @objc func selectImage() {
+        book.isRead = false
+        
+        if book.isRead {
             isReadImage.image = #imageLiteral(resourceName: "On")
+        } else {
+            isReadImage.image = #imageLiteral(resourceName: "Off")
         }
     }
 }

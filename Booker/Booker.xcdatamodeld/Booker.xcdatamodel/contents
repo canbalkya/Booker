@@ -3,11 +3,12 @@
     <entity name="Books" representedClassName="Books" syncable="YES" codeGenerationType="class">
         <attribute name="author" optional="YES" attributeType="String"/>
         <attribute name="isRead" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isReadImage" optional="YES" attributeType="Binary"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="topic" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Books" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Books" positionX="-63" positionY="-18" width="128" height="133"/>
     </elements>
 </model>
