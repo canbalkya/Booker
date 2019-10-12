@@ -52,7 +52,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    func updateBook(name: String, topic: String, author: String) {
+    func updateBook(book: Book, name: String, topic: String, author: String) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         
@@ -61,15 +61,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let popup = UIAlertController(title: "Update", message: "Update book's informations.", preferredStyle: .alert)
         popup.addTextField { (textField) in
-            textField.placeholder = "Name"
+            textField.text = book.booksName
         }
-        
         popup.addTextField { (textField) in
-            textField.placeholder = "Topic"
+            textField.text = book.booksTopic
         }
-        
         popup.addTextField { (textField) in
-            textField.placeholder = "Author"
+            textField.text = book.booksAuthor
         }
         
         let changeAction = UIAlertAction(title: "Change", style: .default) { (_) in
@@ -82,23 +80,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 print(error.localizedDescription)
             }
             
-//            if let result = try? managedContext.fetch(fetchRequest) {
-//                for book in result {
-//                    managedContext.delete(book)
-//                }
-//
-//                self.addBook(name: popup.textFields![0].text!, topic: popup.textFields![1].text!, author: popup.textFields![2].text!, isRead: false, timestamp: Date())
-//
-//                do {
-//                    try managedContext.save()
-//                } catch let error {
-//                    print(error.localizedDescription)
-//                }
-//            }
-            
             self.fetchBooks()
         }
-        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         popup.addAction(changeAction)
@@ -106,12 +89,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.present(popup, animated: true, completion: nil)
     }
     
-    func removeBook(name: String, topic: String, author: String, isRead: Bool, timestamp: Date) {
+    func removeBook(name: String, topic: String, author: String, isRead: Bool, timestamp: Date, isReadImage: UIImage) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
 
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Books")
-        fetchRequest.predicate = NSPredicate(format: "book = %@", name, topic, author, isRead, timestamp as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "book = %@", name, topic, author, isRead, timestamp as CVarArg, isReadImage)
 
         if let result = try? managedContext.fetch(fetchRequest) {
             for book in result {
@@ -202,7 +185,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let update = UIContextualAction(style: .normal, title: "Update") { (action, UIView, (Bool) -> Void) in
-            self.updateBook(name: self.books[indexPath.row].booksName, topic: self.books[indexPath.row].booksTopic, author: self.books[indexPath.row].booksAuthor)
+            self.updateBook(book: self.books[indexPath.row], name: self.books[indexPath.row].booksName, topic: self.books[indexPath.row].booksTopic, author: self.books[indexPath.row].booksAuthor)
             self.fetchBooks()
             tableView.reloadData()
         }
