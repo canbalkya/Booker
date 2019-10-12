@@ -76,6 +76,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 result[0].setValue(popup.textFields![0].text, forKey: "name")
                 result[1].setValue(popup.textFields![1].text, forKey: "topic")
                 result[2].setValue(popup.textFields![2].text, forKey: "author")
+                result[3].setValue(book.isRead, forKey: "isRead")
+                result[4].setValue(book.timestamp, forKey: "timestamp")
+                result[5].setValue(book.isReadImage, forKey: "isReadImage")
             } catch let error {
                 print(error.localizedDescription)
             }
@@ -121,7 +124,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let fetchResults = try managedContext.fetch(fetchRequest)
             
             for item in fetchResults as! [NSManagedObject] {
-                books.append(Book(booksName: item.value(forKey: "name") as! String, booksTopic: item.value(forKey: "topic") as! String, booksAuthor: item.value(forKey: "author") as! String, isRead: item.value(forKey: "isRead") as? Bool ?? false, timestamp: item.value(forKey: "timestamp") as? Date ?? Date(), isReadImage: item.value(forKey: "isReadImage") as? UIImage ?? UIImage(named: "Off")!))
+                books.append(Book(booksImage: UIImage(named: "book") ?? UIImage(), booksName: item.value(forKey: "name") as! String, booksTopic: item.value(forKey: "topic") as! String, booksAuthor: item.value(forKey: "author") as! String, isRead: item.value(forKey: "isRead") as? Bool ?? false, timestamp: item.value(forKey: "timestamp") as? Date ?? Date(), isReadImage: item.value(forKey: "isReadImage") as? UIImage ?? #imageLiteral(resourceName: "Off")))
             }
             
             tableView.reloadData()

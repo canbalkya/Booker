@@ -10,12 +10,14 @@ import UIKit
 import CoreData
 
 class BookCell: UITableViewCell {
+    @IBOutlet weak var booksImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var topicLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var isReadImage: UIImageView!
+    @IBOutlet weak var isReadButton: UIButton!
     
     private var book: Book!
+    var a = 1
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,23 +26,20 @@ class BookCell: UITableViewCell {
     func configureCell(book: Book) {
         self.book = book
         
+        booksImage.image = book.booksImage
         nameLabel.text = book.booksName
         topicLabel.text = book.booksTopic
         authorLabel.text = book.booksAuthor
-        isReadImage.image = book.isReadImage
-        
-        isReadImage.isUserInteractionEnabled = true
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(selectImage))
-        isReadImage.addGestureRecognizer(gestureRecognizer)
+        isReadButton.imageView?.image = book.isReadImage
     }
-    
-    @objc func selectImage() {
-        book.isRead = false
         
-        if book.isRead {
-            isReadImage.image = #imageLiteral(resourceName: "On")
+    @IBAction func isReadButtonTapped(_ sender: UIButton) {
+        a += 1
+        
+        if a.isMultiple(of: 2) {
+            isReadButton.imageView?.image = UIImage(named: "square.fill")
         } else {
-            isReadImage.image = #imageLiteral(resourceName: "Off")
+            isReadButton.imageView?.image = UIImage(named: "square")
         }
     }
 }
