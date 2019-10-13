@@ -190,7 +190,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let update = UIContextualAction(style: .normal, title: "Update") { (action, UIView, (Bool) -> Void) in
             self.updateBook(book: self.books[indexPath.row], name: self.books[indexPath.row].booksName, topic: self.books[indexPath.row].booksTopic, author: self.books[indexPath.row].booksAuthor)
             self.fetchBooks()
-            tableView.reloadData()
         }
         
         return UISwipeActionsConfiguration(actions: [update])
