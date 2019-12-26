@@ -17,7 +17,7 @@ class BookCell: UITableViewCell {
     @IBOutlet weak var isReadButton: UIButton!
     
     private var book: Book!
-    var a = 1
+    var toggleNumber = 1
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,9 +34,9 @@ class BookCell: UITableViewCell {
     }
         
     @IBAction func isReadButtonTapped(_ sender: UIButton) {
-        a += 1
+        toggleNumber += 1
         
-        if a.isMultiple(of: 2) {
+        if toggleNumber.isMultiple(of: 2) {
             isReadButton.imageView?.image = UIImage(named: "square.fill")
         } else {
             isReadButton.imageView?.image = UIImage(named: "square")
