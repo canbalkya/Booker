@@ -201,16 +201,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             textField.placeholder = "Name"
         }
         
-        popup.addTextField { (textField) in
-            textField.placeholder = "Topic"
-        }
-        
-        popup.addTextField { (textField) in
-            textField.placeholder = "Author"
-        }
-        
         let saveAction = UIAlertAction(title: "Add", style: .default) { (_) in
-            self.addBook(name: popup.textFields![0].text!, topic: popup.textFields![1].text!, author: popup.textFields![2].text!, isRead: false, timestamp: Date(), isReadImage: UIImage(named: "Off")!)
+            self.addBook(name: popup.textFields?.first?.text ?? "Error", topic: "", author: "", isRead: false, timestamp: Date(), isReadImage: UIImage(named: "Off")!)
             self.fetchBooks()
         }
         
